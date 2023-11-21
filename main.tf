@@ -20,6 +20,7 @@ module "kms" {
 #Resource  code for creating EFS 
 resource "aws_efs_file_system" "tokyo_efs" {
   creation_token = "tokyo-token"
+  encrypted      = true
   kms_key_id     = module.kms.kms_arn
 
   tags = {
