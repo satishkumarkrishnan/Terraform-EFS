@@ -22,6 +22,7 @@ resource "aws_efs_file_system" "tokyo_efs" {
   creation_token = "tokyo-token"
   encrypted      = true
   kms_key_id     = module.kms.kms_arn
+  depends_on = [module.asg]
 
   tags = {
     Name = "Tokyo-EFS"
@@ -33,7 +34,7 @@ resource "aws_efs_file_system" "foo_with_lifecyle_policy" {
   creation_token = "tokyo-token"
 
   lifecycle_policy {
-    transition_to_ia = "AFTER_7_DAYS"
+    transition_to_ia = "AFTER_7_DAYS"    
   }
 }
 
