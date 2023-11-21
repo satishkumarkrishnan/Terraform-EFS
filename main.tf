@@ -33,7 +33,7 @@ resource "aws_efs_file_system" "foo_with_lifecyle_policy" {
   creation_token = "tokyotoken"
 
   lifecycle_policy {
-    transition_to_ia = "AFTER_1_DAYS"
+    transition_to_ia = "AFTER_7_DAYS"
   }
 }
 
