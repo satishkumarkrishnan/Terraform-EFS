@@ -24,7 +24,7 @@ resource "aws_efs_file_system" "tokyo_efs" {
   kms_key_id     = module.kms.kms_arn
 
   tags = {
-    Name = "TokyoEFS"
+    Name = "Tokyo-EFS"
   }
 }
 
