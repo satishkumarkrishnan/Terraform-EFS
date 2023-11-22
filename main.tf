@@ -67,7 +67,7 @@ resource "null_resource" "configure_nfs" {
   connection {
     type     = "ssh"
     user     = "ubuntu"
-    private_key = module.kms.kms_arn
+    #private_key = module.kms.kms_arn
     host     = module.asg.instance_id
   }
   provisioner "remote-exec" {
