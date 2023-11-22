@@ -31,7 +31,7 @@ module "kms" {
 }*/
 
 #Adding lifecycle Policy
-resource "aws_efs_file_system" "tokyo_efs_lifecyle_policy" {
+resource "aws_efs_file_system" "tokyo_efs" {
  creation_token = "tokyo_token"
   encrypted      = true
   kms_key_id     = module.kms.kms_arn
