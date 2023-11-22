@@ -41,6 +41,5 @@ resource "aws_efs_file_system" "foo_with_lifecyle_policy" {
 #EFS Mount Target
 resource "aws_efs_mount_target" "alpha" {
   file_system_id = aws_efs_file_system.tokyo_efs.id
-  subnet_id      = module.asg.vpc_subnet
-  depends_on     = [module.asg]
+  subnet_id      = module.asg.vpc_subnet  
 }
