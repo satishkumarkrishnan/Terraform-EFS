@@ -55,3 +55,33 @@ resource "aws_efs_mount_target" "alpha" {
 resource "aws_efs_access_point" "test" {
   file_system_id = aws_efs_file_system.tokyo_efs.id
 }
+
+data "aws_iam_policy_document" "policy" {
+  statement {
+    sid    = "ExampleStatement01"
+    effect = "Allow"
+
+    principals {
+      type        = "AWS"
+      identifiers = ["*"]
+    }
+
+    actions = [
+      "elasticfilesystem:ClientMount",
+      "elasticfilesystem:ClientWrite",
+    ]
+
+    resources = [aws_efs_file_system.fs.arn]
+
+    condition {
+      test     = "Bool"
+      variable = "aws:SecureTransport"
+      values   = ["true"]
+    }
+  }
+}
+
+resource "aws_efs_file_system_policy" "policy" {
+  file_system_id = aws_efs_file_system.tokyo_efs.id
+  policy         = data.aws_iam_policy_document.policy.json
+}
