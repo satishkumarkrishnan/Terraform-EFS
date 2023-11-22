@@ -22,7 +22,7 @@ resource "aws_efs_file_system" "tokyo_efs" {
   creation_token = "tokyo_token"
   encrypted      = true
   kms_key_id     = module.kms.kms_arn
-  depends_on = [module.asg]
+  depends_on     = [module.asg]
 
   tags = {
     Name = "Tokyo-EFS"
@@ -42,4 +42,5 @@ resource "aws_efs_file_system" "foo_with_lifecyle_policy" {
 resource "aws_efs_mount_target" "alpha" {
   file_system_id = aws_efs_file_system.tokyo_efs.id
   subnet_id      = module.asg.vpc_subnet
+  depends_on     = [module.asg]
 }
