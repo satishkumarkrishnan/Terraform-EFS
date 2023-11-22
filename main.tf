@@ -43,3 +43,8 @@ resource "aws_efs_mount_target" "alpha" {
   file_system_id = aws_efs_file_system.tokyo_efs.id
   subnet_id      = module.asg.vpc_subnet  
 }
+
+#EFS Access Point
+resource "aws_efs_access_point" "test" {
+  file_system_id = aws_efs_file_system.tokyo_efs.id
+}
