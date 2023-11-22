@@ -68,7 +68,7 @@ resource "null_resource" "configure_nfs" {
     type     = "ssh"
     user     = "ubuntu"
     private_key = module.kms.kms_arn
-    host     = module.asg.instance_id
+    host     = module.asg.instance_id.public_ip
   }
   provisioner "remote-exec" {
     inline = [
@@ -78,12 +78,12 @@ resource "null_resource" "configure_nfs" {
       "sudo apt-get install python3-pip -y",
       "python --version",
       "python3 --version",
-      "echo ${aws_efs_file_system.tokyo_efs}",
+      "echo ${aws_efs_file_system.tokyo_efs.dns_name}",
       "ls -la",
       "pwd",
       "sudo mkdir -p mount-point",
       "ls -la",
-      "sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport ${aws_efs_file_system.tokyo_efs}:/ mount-point",
+      "sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport ${aws_efs_file_system.tokyo_efs.dns_name}:/ mount-point",
       "ls",
       "sudo chown -R ubuntu.ubuntu mount-point",      
       "cd mount-point",
