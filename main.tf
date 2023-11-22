@@ -18,23 +18,30 @@ module "kms" {
 }
 
 #Resource  code for creating EFS 
-resource "aws_efs_file_system" "tokyo_efs" {
+/*resource "aws_efs_file_system" "tokyo_efs" {
   creation_token = "tokyo_token"
   encrypted      = true
   kms_key_id     = module.kms.kms_arn
   depends_on     = [module.asg]
+  
 
   tags = {
     Name = "Tokyo-EFS"
   }
-}
+}*/
 
 #Adding lifecycle Policy
-resource "aws_efs_file_system" "foo_with_lifecyle_policy" {
- # creation_token = "tokyo_token"   
+resource "aws_efs_file_system" "tokyo_efs_lifecyle_policy" {
+ creation_token = "tokyo_token"
+  encrypted      = true
+  kms_key_id     = module.kms.kms_arn
+  depends_on     = [module.asg]  
 
   lifecycle_policy {
     transition_to_ia = "AFTER_7_DAYS"    
+  }
+  tags = {
+    Name = "Tokyo-EFS"
   }
 }
 
