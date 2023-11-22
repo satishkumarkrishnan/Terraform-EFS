@@ -31,8 +31,7 @@ resource "aws_efs_file_system" "tokyo_efs" {
 
 #Adding lifecycle Policy
 resource "aws_efs_file_system" "foo_with_lifecyle_policy" {
-  creation_token = "tokyo_token" 
-  depends_on = [module.asg]
+ # creation_token = "tokyo_token"   
 
   lifecycle_policy {
     transition_to_ia = "AFTER_7_DAYS"    
