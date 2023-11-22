@@ -61,3 +61,42 @@ resource "aws_efs_file_system_policy" "policy" {
   file_system_id = aws_efs_file_system.tokyo_efs.id
   policy         = data.aws_iam_policy_document.policy.json
 }
+
+resource "null_resource" "configure_nfs" {
+  depends_on = [aws_efs_access_point.test, aws_efs_mount_target.alpha]
+  connection {
+    type     = "ssh"
+    user     = "ubuntu"
+    private_key = module.kms.kms_arn
+    host     = module.asg.instance_id
+  }
+  provisioner "remote-exec" {
+    inline = [
+      "sudo apt-get update -y",
+      "sudo apt-get install nfs-common -y",
+      "sudo apt-get install python3.8 -y",
+      "sudo apt-get install python3-pip -y",
+      "python --version",
+      "python3 --version",
+      "echo ${aws_efs_file_system.tokyo_efs}",
+      "ls -la",
+      "pwd",
+      "sudo mkdir -p mount-point",
+      "ls -la",
+      "sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport ${aws_efs_file_system.tokyo_efs}:/ mount-point",
+      "ls",
+      "sudo chown -R ubuntu.ubuntu mount-point",      
+      "cd mount-point",
+      "ls",
+      "mkdir access",      
+      "sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.6 1",
+      "sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.8 2",
+      "printf '2\n' | sudo update-alternatives --config python3",
+      "pwd",
+      "ls -la",
+      "echo 'Python version:'",
+      "python3 --version",
+      "pip3 install --upgrade --target ./access/ numpy --system"
+    ]
+  }
+}
