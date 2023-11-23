@@ -72,12 +72,12 @@ resource "null_resource" "configure_nfs" {
   }
   provisioner "remote-exec" {
     inline = [
-      "sudo apt-get update -y",
+    /*  "sudo apt-get update -y",
       "sudo apt-get install nfs-common -y",
       "sudo apt-get install python3.8 -y",
       "sudo apt-get install python3-pip -y",
       "python --version",
-      "python3 --version",
+      "python3 --version",*/
       "echo ${aws_efs_file_system.tokyo_efs.dns_name}",
       "ls -la",
       "pwd",
