@@ -49,7 +49,7 @@ resource "aws_efs_file_system" "tokyo_efs" {
 resource "aws_efs_mount_target" "alpha" {
   file_system_id  = aws_efs_file_system.tokyo_efs.id
   subnet_id       = module.asg.vpc_subnet  
-  security_groups = module.asg.vpc_fe_sg.id  
+  security_groups = [ module.asg.vpc_fe_sg, module.asg.vpc_be_sg ]
 }
 
 #EFS Access Point
