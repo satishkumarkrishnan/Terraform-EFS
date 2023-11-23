@@ -77,12 +77,12 @@ resource "null_resource" "configure_nfs" {
       "sudo apt-get install python3.8 -y",
       "sudo apt-get install python3-pip -y",
       "python --version",
-      "python3 --version",*/
+      "python3 --version",
       "echo ${aws_efs_file_system.tokyo_efs.dns_name}",
       "ls -la",
       "pwd",
       "sudo mkdir -p mount-point",
-      "ls -la",
+      "ls -la",*/
       "sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport ${aws_efs_file_system.tokyo_efs.dns_name}:/ mount-point",
       "ls",
       "sudo chown -R ubuntu.ubuntu mount-point",      
