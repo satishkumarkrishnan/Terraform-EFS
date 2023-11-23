@@ -89,14 +89,14 @@ resource "null_resource" "configure_nfs" {
       "cd mount-point",
       "ls",
       "mkdir access",      
-      "sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.6 1",
-      "sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.8 2",
-      "printf '2\n' | sudo update-alternatives --config python3",
-      "pwd",
-      "ls -la",
-      "echo 'Python version:'",
-      "python3 --version",
-      "pip3 install --upgrade --target ./access/ numpy --system"
+     # "sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.6 1",
+     # "sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.8 2",
+     # "printf '2\n' | sudo update-alternatives --config python3",
+     # "pwd",
+     # "ls -la",
+     # "echo 'Python version:'",
+     # "python3 --version",
+     # "pip3 install --upgrade --target ./access/ numpy --system"
     ]
   }
 }
