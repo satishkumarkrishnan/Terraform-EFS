@@ -68,6 +68,7 @@ resource "aws_efs_access_point" "test" {
       permissions = "0777"
     }
   }
+  depends_on = [module.asg]
 }
 
 
