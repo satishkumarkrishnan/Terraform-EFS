@@ -7,5 +7,5 @@ output "asg_efs_id" {
 }
 
 output "asg_efs_vpc_sg" {
-  value = aws_efs_mount_target.alpha.security_groups
+  value = aws_efs_mount_target.tokyo_EFS_mount.security_groups
 }
