@@ -46,14 +46,14 @@ resource "aws_efs_file_system" "tokyo_efs" {
 }
 
 #EFS Mount Target
-resource "aws_efs_mount_target" "alpha" {
+resource "aws_efs_mount_target" "tokyo_EFS_mount" {
   file_system_id  = aws_efs_file_system.tokyo_efs.id
   subnet_id       = module.asg.vpc_subnet  
   security_groups = [ module.asg.vpc_fe_sg, module.asg.vpc_be_sg ]
 }
 
 #EFS Access Point
-resource "aws_efs_access_point" "test" {
+resource "aws_efs_access_point" "tokyo_EFS_accesspoint" {
   file_system_id = aws_efs_file_system.tokyo_efs.id
   posix_user {
     gid = 1000
@@ -68,7 +68,9 @@ resource "aws_efs_access_point" "test" {
       permissions = "0777"
     }
   }
-  depends_on = [module.asg]
+  tags = {
+    Name = "Tokyo-EFS-Accesspoint"
+  }
 }
 
 
@@ -78,7 +80,7 @@ resource "aws_efs_file_system_policy" "policy" {
 }
 
 /*resource "null_resource" "configure_nfs" {
-  depends_on = [aws_efs_access_point.test, aws_efs_mount_target.alpha]
+  depends_on = [ aws_efs_access_point.tokyo_EFS_accesspoint, aws_efs_mount_target.tokyo_EFS_mount ]
   connection {
     type     = "ssh"
     user     = "ubuntu"
