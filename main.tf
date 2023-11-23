@@ -54,6 +54,19 @@ resource "aws_efs_mount_target" "alpha" {
 #EFS Access Point
 resource "aws_efs_access_point" "test" {
   file_system_id = aws_efs_file_system.tokyo_efs.id
+  posix_user {
+    gid = 1000
+    uid = 1000
+  }
+
+  root_directory {
+    path = "/access"
+    creation_info {
+      owner_gid   = 1000
+      owner_uid   = 1000
+      permissions = "0777"
+    }
+  }
 }
 
 
@@ -62,17 +75,17 @@ resource "aws_efs_file_system_policy" "policy" {
   policy         = data.aws_iam_policy_document.policy.json
 }
 
-resource "null_resource" "configure_nfs" {
+/*resource "null_resource" "configure_nfs" {
   depends_on = [aws_efs_access_point.test, aws_efs_mount_target.alpha]
   connection {
     type     = "ssh"
     user     = "ubuntu"
-    #private_key = module.kms.kms_arn
+    private_key = module.asg.private_key
     host     = module.asg.instance_id
   }
   provisioner "remote-exec" {
     inline = [
-    /*  "sudo apt-get update -y",
+      "sudo apt-get update -y",
       "sudo apt-get install nfs-common -y",
       "sudo apt-get install python3.8 -y",
       "sudo apt-get install python3-pip -y",
@@ -82,7 +95,7 @@ resource "null_resource" "configure_nfs" {
       "ls -la",
       "pwd",
       "sudo mkdir -p mount-point",
-      "ls -la",*/
+      "ls -la",
       "sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport ${aws_efs_file_system.tokyo_efs.dns_name}:/ mount-point",
       "ls",
       "sudo chown -R ubuntu.ubuntu mount-point",      
@@ -99,4 +112,4 @@ resource "null_resource" "configure_nfs" {
      # "pip3 install --upgrade --target ./access/ numpy --system"
     ]
   }
-}
+}*/
