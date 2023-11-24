@@ -3,7 +3,7 @@ terraform {
     organization = "Satish_Terraform"
 
     workspaces {
-      name = "Terraform_Final"
+      name = "Terraform_Final_updated"
     }
   }
 }
