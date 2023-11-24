@@ -34,7 +34,7 @@ resource "aws_efs_file_system" "tokyo_efs" {
 #EFS Mount Target
 resource "aws_efs_mount_target" "tokyo_EFS_mount" {
   file_system_id  = aws_efs_file_system.tokyo_efs.id
-  subnet_id       = module.vpc.vpc_subnet  
+  subnet_id       = module.vpc.vpc_fe_subnet  
   security_groups = [ module.vpc.vpc_fe_sg, module.vpc.vpc_be_sg ]  
 }
 

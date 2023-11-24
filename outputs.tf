@@ -1,5 +1,5 @@
 output "asg_vpc_subnet" {
-  value = module.vpc.vpc_subnet
+  value = module.vpc.vpc_fe_subnet
 }
 
 output "asg_efs_id" {
