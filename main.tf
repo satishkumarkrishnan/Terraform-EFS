@@ -86,6 +86,7 @@ resource "null_resource" "configure_nfs" {
     user     = "ec2-user"
     #private_key = module.asg.private_key
     host     = module.asg.instance_id
+    
   }
   provisioner "remote-exec" {
 inline = [
