@@ -9,33 +9,19 @@ terraform {
   }
 }
 
-module "asg" {
-  source="git@github.com:satishkumarkrishnan/terraform-aws-asg.git?ref=main"  
+module "vpc" {
+  source="git@github.com:satishkumarkrishnan/terraform-aws-vpc.git?ref=main"
 }
 
 module "kms" {
   source="git@github.com:satishkumarkrishnan/Terraform-KMS.git?ref=main"  
 }
 
-#Resource  code for creating EFS 
-/*resource "aws_efs_file_system" "tokyo_efs" {
-  creation_token = "tokyo_token"
-  encrypted      = true
-  kms_key_id     = module.kms.kms_arn
-  depends_on     = [module.asg]
-  
-
-  tags = {
-    Name = "Tokyo-EFS"
-  }
-}*/
-
 #Adding lifecycle Policy
 resource "aws_efs_file_system" "tokyo_efs" {
  creation_token = "tokyo_token"
   encrypted      = true
-  kms_key_id     = module.kms.kms_arn
-  depends_on     = [module.asg]  
+  kms_key_id     = module.kms.kms_arn  
 
   lifecycle_policy {
     transition_to_ia = "AFTER_7_DAYS"    
@@ -48,8 +34,8 @@ resource "aws_efs_file_system" "tokyo_efs" {
 #EFS Mount Target
 resource "aws_efs_mount_target" "tokyo_EFS_mount" {
   file_system_id  = aws_efs_file_system.tokyo_efs.id
-  subnet_id       = module.asg.vpc_subnet  
-  security_groups = [ module.asg.vpc_fe_sg, module.asg.vpc_be_sg ]  
+  subnet_id       = module.vpc.vpc_subnet  
+  security_groups = [ module.vpc.vpc_fe_sg, module.vpc.vpc_be_sg ]  
 }
 
 #EFS Access Point
