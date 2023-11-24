@@ -9,9 +9,9 @@ terraform {
   }
 }
 
-module "vpc" {
-  source="git@github.com:satishkumarkrishnan/terraform-aws-vpc.git?ref=main"
-}
+#module "vpc" {
+#  source="git@github.com:satishkumarkrishnan/terraform-aws-vpc.git?ref=main"
+#}
 
 module "kms" {
   source="git@github.com:satishkumarkrishnan/Terraform-KMS.git?ref=main"  
