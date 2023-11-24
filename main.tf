@@ -84,7 +84,7 @@ resource "null_resource" "configure_nfs" {
   connection {
     type     = "ssh"
     user     = "ec2-user"
-    private_key = module.asg.private_key
+    #private_key = module.asg.private_key
     host     = module.asg.instance_id
   }
   provisioner "remote-exec" {
