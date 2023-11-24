@@ -9,7 +9,7 @@ terraform {
   }
 }
 
-module "vpc" {
+module "asg" {
   source="git@github.com:satishkumarkrishnan/terraform-aws-vpc.git?ref=main"
 }
 
@@ -34,8 +34,8 @@ resource "aws_efs_file_system" "tokyo_efs" {
 #EFS Mount Target
 resource "aws_efs_mount_target" "tokyo_EFS_mount" {
   file_system_id  = aws_efs_file_system.tokyo_efs.id
-  subnet_id       = module.vpc.vpc_fe_subnet  
-  security_groups = [ module.vpc.vpc_fe_sg, module.vpc.vpc_be_sg ]  
+  subnet_id       = module.asg.vpc_fe_subnet  
+  security_groups = [ module.asg.vpc_fe_sg, module.asg.vpc_be_sg ]  
 }
 
 #EFS Access Point
