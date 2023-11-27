@@ -4,7 +4,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 5.0.0"
+      version = "5.2.0"
     }
   }
 }
@@ -14,7 +14,7 @@ module "asg" {
 }
 
 module "kms" {
-  source="git@github.com:satishkumarkrishnan/Terraform-KMS.git?ref=main"  
+  source="git@github.com:satishkumarkrishnan/Terraform-KMS.git?ref=main"
 }
 
 #Adding lifecycle Policy
